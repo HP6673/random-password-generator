@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Random Password Generator</title>
+    <style>
+      body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+      input[type="number"] { width: 60px; padding: 5px; }
+      button { padding: 10px 15px; margin-top: 10px; }
+      #output { font-family: monospace; margin-top: 15px; padding: 10px; border: 1px solid #ccc; }
+    </style>
+  </head>
+  <body>
+    <h2>Random Password Generator</h2>
+
+    <label>Password Length:</label>
+    <input type="number" id="length" min="4" max="128" value="12"><br><br>
+
+    <label><input type="checkbox" id="lowercase" checked> Lowercase</label><br>
+    <label><input type="checkbox" id="uppercase" checked> Uppercase</label><br>
+    <label><input type="checkbox" id="numbers" checked> Numbers</label><br>
+    <label><input type="checkbox" id="symbols" checked> Symbols</label><br><br>
+
+    <button onclick="generatePassword()">Generate</button>
+
+    <h3>Password:</h3>
+    <div id="output"></div>
+
+    <p style="font-size: 12px; margin-top: 20px;">
+      Like this tool? Support at 
+      <a href="https://www.buymeacoffee.com/donate2mrpress" target="_blank">buymeacoffee.com/donate2mrpress</a>
+    </p>
+
+    <script>
+      function generatePassword() {
+        const length = parseInt(document.getElementById('length').value);
+        const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numbers = '0123456789';
+        const symbols = '!@#$%^&*()-_=+[]{};:,.<>?';
+
+        let charset = '';
+        if (document.getElementById('lowercase').checked) charset += lowercase;
+        if (document.getElementById('uppercase').checked) charset += uppercase;
+        if (document.getElementById('numbers').checked) charset += numbers;
+        if (document.getElementById('symbols').checked) charset += symbols;
+
+        if (charset === '') {
+          document.getElementById('output').textContent = 'Please select at least one character type.';
+          return;
+        }
+
+        let password = '';
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * charset.length);
+          password += charset[randomIndex];
+        }
+
+        document.getElementById('output').textContent = password;
+      }
+    </script>
+  </body>
+</html>
